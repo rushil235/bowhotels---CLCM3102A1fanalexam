@@ -181,6 +181,7 @@ nav ul li a {
 
     .cta-button {
         padding: 8px 16px;
+
         white-space: nowrap; /* Prevents the text from wrapping */
     }
 
@@ -195,7 +196,7 @@ nav ul li a {
 }
 /* Center alignment for the contact section */
 .contact {
-    width: 50%;
+    width: 60%;
     margin: 0 auto;  /* This centers the entire contact section */
     text-align: center;  /* Centers the text within the section */
     padding: 20px;
@@ -209,6 +210,7 @@ nav ul li a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-wrap: wrap;
 }
 
 /* Adjusting form-group to align elements properly */
