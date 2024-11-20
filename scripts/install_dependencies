@@ -3,4 +3,4 @@
 yum install -y httpd
 
 # Correct path to install_codedeploy_agent.sh
-scripts/install_codedeploy_agent.sh  # Use relative path if in the same directory
+./install_codedeploy_agent.sh  # Use relative path if in the same directory
