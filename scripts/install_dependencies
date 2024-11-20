@@ -1,5 +1,6 @@
 #!/bin/bash
+# Install dependencies like httpd
 yum install -y httpd
-scripts/install_codedeploy_agent.sh
 
-
+# Correct path to install_codedeploy_agent.sh
+./scripts/install_codedeploy_agent.sh  # Use relative path if in the same directory
