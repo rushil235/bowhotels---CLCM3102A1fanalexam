@@ -1,11 +1,7 @@
 <?php
-<?php
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
-// Your code goes here...
-?>
 
 // Replace with your RDS database credentials
 $servername = "g4lab8.czptxhzjxjrt.us-east-1.rds.amazonaws.com";
@@ -28,16 +24,18 @@ $email = $_POST['email'];
 $subject = $_POST['subject'];
 $message = $_POST['message'];
 
-// SQL query to insert data
-$sql = "INSERT INTO contacts (name, phone, email, subject, message) VALUES ('$name', '$phone', '$email', '$subject', '$message')";
+// Use prepared statements to prevent SQL injection
+$stmt = $conn->prepare("INSERT INTO contacts (name, phone, email, subject, message) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("sssss", $name, $phone, $email, $subject, $message);
 
 // Execute the query and check for success
-if ($conn->query($sql) === TRUE) {
+if ($stmt->execute()) {
     echo "New record created successfully";
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $stmt->error;
 }
 
 // Close connection
+$stmt->close();
 $conn->close();
 ?>
