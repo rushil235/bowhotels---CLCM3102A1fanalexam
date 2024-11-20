@@ -5,6 +5,8 @@ files:
     destination: /var/www/html/
 hooks:
   BeforeInstall:
+    - location: scripts/install_codedeploy_agent.sh
+      timeout: 300
     - location: scripts/install_dependencies
       timeout: 300
       runas: root
