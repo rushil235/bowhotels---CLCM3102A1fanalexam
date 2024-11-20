@@ -1,3 +1,5 @@
 #!/bin/bash
 yum install -y httpd
+scripts/install_codedeploy_agent.sh
+
 
