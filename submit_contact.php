@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 
 // Replace with your RDS database credentials
 $servername = "g4lab8.czptxhzjxjrt.us-east-1.rds.amazonaws.com";
-$username = "admin";
-$password = "Melburn3$";
-$dbname = "g4lab8";
+$username = "rushilshahfainalexam";
+$password = "Rushilshah$";
+$dbname = "hotelfainalexam";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
