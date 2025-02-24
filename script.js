@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('contactForm');
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
@@ -7,9 +7,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameError = document.getElementById('nameError');
     const emailError = document.getElementById('emailError');
     const messageError = document.getElementById('messageError');
+    
+    const modal = document.getElementById('confirmationModal');
+    const modalMessage = document.getElementById('modalMessage');
+    const confirmBtn = document.getElementById('confirmSubmit');
+    const cancelBtn = document.getElementById('cancelSubmit');
 
-    // Form validation logic
-    form.addEventListener('submit', function(event) {
+    let formData = null; // To store form data before submission
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form submission
         let isValid = true;
 
         // Name validation
@@ -45,18 +52,38 @@ document.addEventListener('DOMContentLoaded', function() {
             messageError.textContent = '';
         }
 
-        // Prevent form submission if validation fails
+        // If validation fails, stop submission
         if (!isValid) {
-            event.preventDefault();
             return;
         }
 
-        // Create a confirmation box before submission
-        const confirmation = confirm('Are you sure you want to submit the form?');
-        if (!confirmation) {
-            // If the user clicks "Cancel", prevent form submission
-            event.preventDefault();
+        // Store form data and show the modal for confirmation
+        formData = new FormData(form);
+        modalMessage.textContent = "Are you sure you want to submit the form?";
+        modal.style.display = "block";
+    });
+
+    // Confirm form submission
+    confirmBtn.addEventListener('click', function () {
+        modal.style.display = "none";
+        if (formData) {
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert("Form submitted successfully!"); // Replace with a non-alert notification in production
+                    form.reset();
+                } else {
+                    alert("Error submitting form. Please try again."); // Handle errors
+                }
+            }).catch(error => console.error("Submission error:", error));
         }
+    });
+
+    // Cancel submission
+    cancelBtn.addEventListener('click', function () {
+        modal.style.display = "none";
     });
 
     // Email validation function
