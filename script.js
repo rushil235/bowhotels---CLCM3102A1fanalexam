@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalMessage = document.getElementById('modalMessage');
     const confirmBtn = document.getElementById('confirmSubmit');
     const cancelBtn = document.getElementById('cancelSubmit');
-
+    
+    const notification = document.getElementById('notification'); // New notification element
     let formData = null; // To store form data before submission
 
     form.addEventListener('submit', function (event) {
@@ -69,15 +70,21 @@ document.addEventListener('DOMContentLoaded', function () {
         if (formData) {
             fetch(form.action, {
                 method: form.method,
-                body: formData
+                body: formData,
+                headers: {
+                    'Content-Security-Policy': "upgrade-insecure-requests" // Ensuring secure requests
+                }
             }).then(response => {
                 if (response.ok) {
-                    alert("Form submitted successfully!"); // Replace with a non-alert notification in production
+                    showNotification("Form submitted successfully!", "success");
                     form.reset();
                 } else {
-                    alert("Error submitting form. Please try again."); // Handle errors
+                    showNotification("Error submitting form. Please try again.", "error");
                 }
-            }).catch(error => console.error("Submission error:", error));
+            }).catch(error => {
+                console.error("Submission error:", error);
+                showNotification("Network error. Please check your connection.", "error");
+            });
         }
     });
 
@@ -90,5 +97,15 @@ document.addEventListener('DOMContentLoaded', function () {
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(String(email).toLowerCase());
+    }
+
+    // Function to show notifications
+    function showNotification(message, type) {
+        notification.textContent = message;
+        notification.className = type === "success" ? "notification success" : "notification error";
+        notification.style.display = "block";
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 5000);
     }
 });
